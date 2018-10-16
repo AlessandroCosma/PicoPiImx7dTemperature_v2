@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
                 mainActivityViewModel.setLedLight(R,true);
                 mainActivityViewModel.setLedLight(G,false);
                 mainActivityViewModel.setLedLight(B,false);
+
+                mainActivityViewModel.playSound();
             }
 
 
 
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
         mainActivityViewModel.setLedLight(G,false);
+
+        //apro la connessione con lo Speaker di allarme
+        mainActivityViewModel.openSpeaker();
 
         //inizio ad osservare il ButtonLiveData
         mainActivityViewModel.getButtonLiveData().observe(MainActivity.this, exitButtonLiveDataObserver);
@@ -101,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
         mainActivityViewModel.setLedLight(G,false);
+
+        //chiudo la connessione con lo Speaker di allarme
+        mainActivityViewModel.closeSpeaker();
 
         //azzero le scritte sul display
         mainActivityViewModel.cleanDisplay();
