@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
                 mainActivityViewModel.playSound();
             }
-
-
-
         }
     };
 
