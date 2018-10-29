@@ -15,15 +15,10 @@ import java.math.BigDecimal;
 public class TemperatureLiveData extends LiveData<Float> {
 
     private static final String TAG = TemperatureLiveData.class.getSimpleName();
-
     private Bmx280 tempSensor;
     private Handler handler;
 
-
-
-
     private final Runnable reportTemperature = new Runnable() {
-
         float temperature;
         @Override
         public void run() {
@@ -50,7 +45,6 @@ public class TemperatureLiveData extends LiveData<Float> {
         super.onActive();
         Log.d(TAG, "onActive");
 
-
         try {
             tempSensor = RainbowHat.openSensor();
             tempSensor.setTemperatureOversampling(Bmx280.OVERSAMPLING_1X);
@@ -65,9 +59,6 @@ public class TemperatureLiveData extends LiveData<Float> {
 
         //avvio letture della temperatura
         handler.post(reportTemperature);
-
-
-
     }
 
     @Override
@@ -81,12 +72,8 @@ public class TemperatureLiveData extends LiveData<Float> {
         catch (IOException e) {
             Log.d(TAG, "onInactive: " + e);
         }
-
+        
         super.onInactive();
         Log.d(TAG, "onInactive");
-
-
     }
-
-
 }
