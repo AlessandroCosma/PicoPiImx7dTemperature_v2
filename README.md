@@ -8,9 +8,9 @@ Solo nel caso in cui il valore soglia MAX_TEMPERATURE venga superato, viene atti
 
 Valori di default: 
 
-MAX_TEMPERATURE = 28°C
+    MAX_TEMPERATURE = 28°C
 
-NORMAL_TEMPERATURE = 24°C
+    NORMAL_TEMPERATURE = 24°C
                    
 
 
