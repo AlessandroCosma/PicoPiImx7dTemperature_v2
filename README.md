@@ -6,8 +6,9 @@ i led blu, verde o rosso, a seconda se temperatura rilevata è minore di NORMAL_
 MAX_TEMPERATURE oppure maggiore di MAX_TEMPERATURE.
 Solo nel caso in cui il valore soglia MAX_TEMPERATURE venga superato, viene attivato un allarme sonoro attraverso il buzzer pwm Piezo Buzzer.
 
-Valori di default: MAX_TEMPERATURE = 28°C
-                   NORMAL_TEMPERATURE = 24°C
+Valori di default: 
+MAX_TEMPERATURE = 28°C
+NORMAL_TEMPERATURE = 24°C
                    
 
 
