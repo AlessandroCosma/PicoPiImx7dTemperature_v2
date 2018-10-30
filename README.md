@@ -1,3 +1,5 @@
+**PicoPiImx7dTemperature**
+**versione 2**
 
 PicoPiImx7dTemperature è un'app AndroidThings sviluppata per la piattaforma PICO-PI-IMX7-STARTKIT-RAINBOW-HAT 
 (https://shop.technexion.com/pico-pi-imx7-startkit-rainbow-hat.html) che rileva la temperatura attraverso il sensore Bmx280 
