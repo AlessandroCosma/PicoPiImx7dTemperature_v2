@@ -42,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
     //costante che mi definisce il bus I2C del RainbowHat
     private static final String DEFAULT_I2C_BUS = "I2C1";
 
+    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
+    private final PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
+
     //Stringhe che mi rappresentano i led red, blue e green
     private final char R = 'R';
     private final char B = 'B';
     private final char G = 'G';
 
-
     private MainActivityViewModel mainActivityViewModel;
 
-    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
-    private final PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
     private final Observer<Button> exitButtonLiveDataObserver = new Observer<Button>(){
         @Override
@@ -90,16 +90,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /** Metodo per la scansione di device I2C del RainbowHat */
     private void executei2cScan(){
         String hexAddress;
-        I2cDevice device
+        String name;
         for (int address = 0; address < 127; address++) {
             //try-with-resources: auto-close the devices
-            try (device = mPeripheralManager.openI2cDevice(DEFAULT_I2C_BUS, address)) {
+            try (final I2cDevice device = mPeripheralManager.openI2cDevice(DEFAULT_I2C_BUS, address)) {
                 try {
                     hexAddress = Integer.toHexString(address);
                     device.readRegByte(0x0);
-                    Log.i("i2cScanner", "Trying: "+hexAddress+" - SUCCESS -> device name = "+RainbowHatDictManager.getDictionaryI2C().get(hexAddress));
+                    name = RainbowHatDictManager.getDictionaryI2C().get(hexAddress);
+                    if (name != null)
+                        Log.i("i2cScanner", "Trying: "+hexAddress+" - SUCCESS -> device name = "+name);
                 } catch (final IOException e) {
                     //Log.i("i2cScanner", "Trying: "+address+" - FAIL");
                 }
@@ -111,6 +114,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void executeGPIOScan(){
+
+        List<String> mGpioList;
+        Gpio mGpio;
+        String name;
+
+        //obtain the gpio port list
+        mGpioList = mPeripheralManager.getGpioList();
+
+        for(String gpioDeviceName: mGpioList){
+            //Log.i("gpioScanner",gpioDeviceName);
+            name = RainbowHatDictManager.getDictionaryGPIO().get(gpioDeviceName);
+            if (name != null)
+                 Log.i("gpioScanner", "Trying: "+gpioDeviceName+" - SUCCESS -> device name = "+name);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +148,24 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //esecuzione scansione I2C di RainbowHat
         mExecutorService.submit(i2cScanner);
 
+        // Callable per scansione device GPIO
+        final Callable<Void> gpioScanner = new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                //perform scan
+                executeGPIOScan();
+                //dummy return value
+                return null;
+            }
+        };
+
+        //esecuzione scansione GPIO //esecuzione scansione I2C di RainbowHat
+        mExecutorService.submit(gpioScanner);
+
+        /*
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         //spengo i led se accesi
@@ -145,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
 
         //inizio ad osservare il TemperatureLiveData
         mainActivityViewModel.getTemperatureLiveData().observe(MainActivity.this, temperatureLiveDataObserver);
-
+        */
 
     }
 
 
     @Override
     protected void onDestroy() {
-
+        /*
         //spengo i led se accesi
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
@@ -163,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
         //azzero le scritte sul display
         mainActivityViewModel.cleanDisplay();
-
+        */
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
