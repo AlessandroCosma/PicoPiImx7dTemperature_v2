@@ -172,8 +172,22 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //esecuzione scansione GPIO //esecuzione scansione I2C di RainbowHat
+        //esecuzione scansione GPIO di RainbowHat
         mExecutorService.submit(gpioScanner);
+
+        // Callable per scansione device PWM
+        final Callable<Void> pwmScanner = new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                //perform scan
+                executePWMScan();
+                //dummy return value
+                return null;
+            }
+        };
+
+        //esecuzione scansione PWM di RainbowHat
+        mExecutorService.submit(pwmScanner);
 
         /*
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
