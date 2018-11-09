@@ -4,11 +4,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.util.Log;
 
 import com.alessandrocosma.picopiimx7dtemperature.myviewmodel.MainActivityViewModel;
 import com.google.android.things.contrib.driver.button.Button;
+
+
+import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
+import com.google.android.things.pio.I2cDevice;
+import com.google.android.things.pio.Gpio;
+import com.google.android.things.pio.PeripheralManager;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.io.IOException;
 
 
 /**
@@ -28,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static final float MAX_TEMPERATURE = 28.0f;
     private static final float NORMAL_TEMPERATURE = 24.0f;
 
+    //costante che mi definisce il bus I2C del RainbowHat
+    private static final String DEFAULT_I2C_BUS = "I2C1";
+
     //Stringhe che mi rappresentano i led red, blue e green
     private final char R = 'R';
     private final char B = 'B';
@@ -36,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mainActivityViewModel;
 
+    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
+    private final PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
     private final Observer<Button> exitButtonLiveDataObserver = new Observer<Button>(){
         @Override
@@ -74,10 +90,45 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void executei2cScan(){
+        String hexAddress;
+        I2cDevice device
+        for (int address = 0; address < 127; address++) {
+            //try-with-resources: auto-close the devices
+            try (device = mPeripheralManager.openI2cDevice(DEFAULT_I2C_BUS, address)) {
+                try {
+                    hexAddress = Integer.toHexString(address);
+                    device.readRegByte(0x0);
+                    Log.i("i2cScanner", "Trying: "+hexAddress+" - SUCCESS -> device name = "+RainbowHatDictManager.getDictionaryI2C().get(hexAddress));
+                } catch (final IOException e) {
+                    //Log.i("i2cScanner", "Trying: "+address+" - FAIL");
+                }
+
+            } catch (final IOException e) {
+                //in case address not exists, openI2cDevice() generates an exception
+            }
+        }
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+
+        // Callable per scansione device I2C
+        final Callable<Void> i2cScanner = new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                //perform scan
+                executei2cScan();
+                //dummy return value
+                return null;
+            }
+        };
+
+        mExecutorService.submit(i2cScanner);
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
