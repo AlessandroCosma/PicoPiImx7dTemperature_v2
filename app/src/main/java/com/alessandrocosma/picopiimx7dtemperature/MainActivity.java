@@ -124,12 +124,22 @@ public class MainActivity extends AppCompatActivity {
         //obtain the gpio port list
         mGpioList = mPeripheralManager.getGpioList();
 
-        for(String gpioDeviceName: mGpioList){
+        for (String gpioDeviceName: mGpioList){
             //Log.i("gpioScanner",gpioDeviceName);
             name = RainbowHatDictManager.getDictionaryGPIO().get(gpioDeviceName);
             if (name != null)
                  Log.i("gpioScanner", "Trying: "+gpioDeviceName+" - SUCCESS -> device name = "+name);
         }
+    }
+
+
+    private void executePWMScan(){
+        List<String> mPWMList;
+        mPWMList = mPeripheralManager.getPwmList();
+
+        for (String pwmDeviceName: mPWMList)
+            Log.i("pwmScanner",pwmDeviceName);
+
     }
 
     @Override
