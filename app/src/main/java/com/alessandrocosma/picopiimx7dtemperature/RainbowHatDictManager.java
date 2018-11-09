@@ -17,10 +17,6 @@ public final class RainbowHatDictManager {
 
         private HashMap<String, String> dict;
 
-        public RainbowHatDictionary(){
-            this.dict = new HashMap<String, String>();
-        }
-
         public RainbowHatDictionary(int initialiCapacity){
             this.dict = new HashMap<String, String>(initialiCapacity);
         }
@@ -50,28 +46,8 @@ public final class RainbowHatDictManager {
         }
     };
 
-
-    private static RainbowHatDictionary dictionaryGPIO = new RainbowHatDictionary(6){
-        {
-            put("GPIO2_IO00", "GREEN_LED");
-            put("GPIO2_IO02", "RED_LED");
-            put("GPIO2_IO05", "BLUE_LED");
-            put("GPIO2_IO07", "BUTTON_C");
-            put("GPIO6_IO14", "BUTTON_A");
-            put("GPIO6_IO15", "BUTTON_B");
-
-            //device gpio della board, non del RainbowHat
-            //put("GPIO6_IO12", "CLOCK_PORT");
-            //put("GPIO6_IO13", "DATA_PORT");
-        }
-    };
-
     public final static RainbowHatDictionary getDictionaryI2C() {
         return dictionaryI2C;
-    }
-
-    public final static RainbowHatDictionary getDictionaryGPIO(){
-        return dictionaryGPIO;
     }
 
 }
