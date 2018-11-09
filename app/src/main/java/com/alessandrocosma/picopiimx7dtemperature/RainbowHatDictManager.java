@@ -50,7 +50,9 @@ public final class RainbowHatDictManager {
         }
     };
 
-
+    /** Dizionario device GPIO
+     *  numero default di device: 6
+     */
     private static RainbowHatDictionary dictionaryGPIO = new RainbowHatDictionary(6){
         {
             put("GPIO2_IO00", "GREEN_LED");
@@ -66,12 +68,26 @@ public final class RainbowHatDictManager {
         }
     };
 
+    /** Dizionario device PWM
+     *  numero default di device: 2
+     */
+    private static RainbowHatDictionary dictionaryPWM = new RainbowHatDictionary(2){
+        {
+            put("PWM2","BUZZER");
+            put("PWM1", "HEADER");
+        }
+    }
+
     public final static RainbowHatDictionary getDictionaryI2C() {
         return dictionaryI2C;
     }
 
     public final static RainbowHatDictionary getDictionaryGPIO(){
         return dictionaryGPIO;
+    }
+
+    public final static RainbowHatDictionary getDictionaryPWM{
+        return dictionaryPWM;
     }
 
 }
