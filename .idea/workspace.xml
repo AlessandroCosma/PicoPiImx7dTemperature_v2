@@ -15,7 +15,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/RainbowHatDictManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/RainbowHatDictManager.java" afterDir="false" />
@@ -78,8 +77,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="132" selection-start-line="132" selection-end-line="132" />
+            <state relative-caret-position="512">
+              <caret line="188" column="34" selection-start-line="188" selection-start-column="34" selection-end-line="188" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,12 +89,8 @@
       <file leaf-file-name="RainbowHatDictManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/RainbowHatDictManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="63" column="29" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="29" />
-              <folding>
-                <element signature="e#635#636#0" expanded="true" />
-                <element signature="e#678#679#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="386">
+              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -2689,10 +2684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1242">
           <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
-          <folding>
-            <element signature="e#635#636#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2893,19 +2884,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/RainbowHatDictManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="63" column="29" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="29" />
-          <folding>
-            <element signature="e#635#636#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="386">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alessandrocosma/picopiimx7dtemperature/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
+        <state relative-caret-position="512">
+          <caret line="188" column="34" selection-start-line="188" selection-start-column="34" selection-end-line="188" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

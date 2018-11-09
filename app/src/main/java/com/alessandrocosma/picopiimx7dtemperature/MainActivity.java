@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         //esecuzione scansione PWM di RainbowHat
         mExecutorService.submit(pwmScanner);
 
-        /*
+
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         //spengo i led se accesi
@@ -205,14 +205,14 @@ public class MainActivity extends AppCompatActivity {
 
         //inizio ad osservare il TemperatureLiveData
         mainActivityViewModel.getTemperatureLiveData().observe(MainActivity.this, temperatureLiveDataObserver);
-        */
+
 
     }
 
 
     @Override
     protected void onDestroy() {
-        /*
+
         //spengo i led se accesi
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
         //azzero le scritte sul display
         mainActivityViewModel.cleanDisplay();
-        */
+        
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
