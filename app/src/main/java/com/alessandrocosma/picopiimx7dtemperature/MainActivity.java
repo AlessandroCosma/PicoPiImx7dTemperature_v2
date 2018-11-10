@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
         //azzero le scritte sul display
         mainActivityViewModel.cleanDisplay();
-        
+
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
