@@ -4,32 +4,42 @@ import java.util.HashMap;
 
 /**
  * Classe che mi rappresenta un dizionario implementato con HashMap<String, String>
- * String n°1 = chiave che rappresenta l'indirizzo del device (nel caso I2C)
- *              oppure id alfanumerico (caso GPIO, PWM)
- * String °2 = nome che assegno al device connesso
+ * @author Alessandro Cosma
  */
 public final class RainbowHatDictionary {
 
     private HashMap<String, String> dict;
 
+    /**
+     * Costruttore che crea un dizionario vuoto
+     */
     public RainbowHatDictionary(){
         this.dict = new HashMap<String, String>();
     }
 
+    /**
+     * Costruttore che crea un dizionario con una certa capacità iniziale
+     * @param initialiCapacity la capacità iniziale con cui viene creato il dizionario
+     */
     public RainbowHatDictionary(int initialiCapacity){
         this.dict = new HashMap<String, String>(initialiCapacity);
     }
 
+    /**
+     * Metodo per inserire un elemento nel dizionario
+     * @param key la chiave che identifica l'elemento
+     * @param name il valore da attribuire all'elemento
+     */
     public void put(String key, String name){
         dict.put(key, name);
     }
 
-    public String get(Object key){
-        if(key instanceof String)
+    /**
+     * Metodo per ottenere un valore data la chiave
+     * @param key la chiave dell'elemento da cercare
+     * @return il valore "name" dell'elemento avente chiave key
+     */
+    public String get(String key){
             return dict.get(key);
-        else if(key instanceof Integer){
-            return dict.get(key.toString());
-        }
-        else return null;
     }
 }

@@ -90,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    /** Metodo per la scansione di device I2C del RainbowHat */
+    /**
+     * Metodo per la scansione di device I2C del RainbowHat
+     */
     private void executei2cScan(){
         String hexAddress;
         String name;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     hexAddress = Integer.toHexString(address);
                     device.readRegByte(0x0);
                     name = RainbowHatDictManager.getDictionaryI2C().get(hexAddress);
-                    if (name != null)
+                    if (name != null)//si può togliere l'if
                         Log.i("i2cScanner", "Trying: "+hexAddress+" - SUCCESS -> device name = "+name);
                 } catch (final IOException e) {
                     //Log.i("i2cScanner", "Trying: "+address+" - FAIL");
@@ -114,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Metodo per la scansione di device GPIO del RainbowHat
+     */
     private void executeGPIOScan(){
 
         List<String> mGpioList;
@@ -132,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metodo per la scansione di device PWM del RainbowHat
+     */
     private void executePWMScan(){
         List<String> mPWMList;
         mPWMList = mPeripheralManager.getPwmList();
