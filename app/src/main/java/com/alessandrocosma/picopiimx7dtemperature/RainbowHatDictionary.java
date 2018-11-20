@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Classe che mi rappresenta un dizionario implementato con HashMap<String, String>
  * @author Alessandro Cosma
  */
-public final class RainbowHatDictionary {
+public class RainbowHatDictionary {
 
     private HashMap<String, String> dict;
 

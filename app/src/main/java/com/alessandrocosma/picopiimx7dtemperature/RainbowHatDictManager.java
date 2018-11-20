@@ -43,7 +43,7 @@ public final class RainbowHatDictManager {
             put("PWM2","BUZZER");
             put("PWM1", "HEADER");
         }
-    }
+    };
 
     public final static RainbowHatDictionary getDictionaryI2C() {
         return dictionaryI2C;
