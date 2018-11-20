@@ -2,14 +2,12 @@
 
 **versione v2: Android Architecture Components**
 
-PicoPiImx7dTemperature è un'app AndroidThings sviluppata per la piattaforma PICO-PI-IMX7-STARTKIT-RAINBOW-HAT 
-(https://shop.technexion.com/pico-pi-imx7-startkit-rainbow-hat.html) che rileva la temperatura attraverso il sensore Bmx280 
-presente nel RainbowHat, la mostra all'utente attraverso il display alfanumerico HT16K33 (sempre presente nel RainbowHat) e attiva 
-i led blu, verde o rosso, a seconda se temperatura rilevata è minore di NORMAL_TEMPERATURE, compresa tra NORMAL_TEMPERATURE e 
-MAX_TEMPERATURE oppure maggiore di MAX_TEMPERATURE.
-Solo nel caso in cui il valore soglia MAX_TEMPERATURE venga superato, viene attivato un allarme sonoro attraverso il buzzer pwm Piezo Buzzer.
+PicoPiImx7dTemperature is an AndroidThings app developed for the PICO-PI-IMX7-STARTKIT-RAINBOW-HAT platform
+(https://shop.technexion.com/pico-pi-imx7-startkit-rainbow-hat.html) that detects the temperature through the Bmx280 sensor
+embedded in the RainbowHat, showing it to the user through the alphanumeric display HT16K33 (also presents in the RainbowHat) and activates the blue, green or red LEDs, depending on whether the measured temperature is lower than NORMAL_TEMPERATURE, between NORMAL_TEMPERATURE and MAX_TEMPERATURE or greater than MAX_TEMPERATURE.
+Only in the event that the MAX_TEMPERATURE threshold value is exceeded, an audible alarm is triggered via the Piezo Buzzer pwm buzzer.
 
-    Valori di default: 
+    Default values: 
 
     MAX_TEMPERATURE = 28°C
 
@@ -18,7 +16,7 @@ Solo nel caso in cui il valore soglia MAX_TEMPERATURE venga superato, viene atti
 
 
 
-Per importare il seguente progetto in AndroidStudio:
-1) clonare il repo in locale
-2) rinominare la directory del progetto da 'PicoPiTemperature_v2' a 'PicoPiImx7dTemperature'
-3) fare l'import in AndoridStudio tramite l'apposita procedura
+To import the following project into AndroidStudio:
+1) clone the repo locally
+2) rename the project directory from 'PicoPiTemperature_v2' to 'PicoPiImx7dTemperature'
+3) import into AndoridStudio using the appropriate procedure
