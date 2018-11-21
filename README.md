@@ -1,6 +1,5 @@
 # PicoPiImx7dTemperature
-
-## versione v2: Android Architecture Components 
+## Android Architecture Components version
 
 PicoPiImx7dTemperature is an AndroidThings app developed for the PICO-PI-IMX7-STARTKIT-RAINBOW-HAT platform that detects the temperature through the Bmx280 sensor embedded in the RainbowHat.
 
