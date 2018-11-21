@@ -16,7 +16,3 @@ Only in the event that the MAX_TEMPERATURE threshold value is exceeded, an audib
 
 
 
-To import the following project into AndroidStudio:
-1) clone the repo locally
-2) rename the project directory from 'PicoPiTemperature_v2' to 'PicoPiImx7dTemperature'
-3) import into AndoridStudio using the appropriate procedure
