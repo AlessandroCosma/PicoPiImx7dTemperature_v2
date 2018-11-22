@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.ViewModelProvider;
 import android.util.Log;
 
 import com.alessandrocosma.picopiimx7dtemperature.myviewmodel.MainActivityViewModel;
@@ -16,9 +18,6 @@ import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.PeripheralManager;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.io.IOException;
 
 
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     //costante che mi definisce il bus I2C del RainbowHat
     private static final String DEFAULT_I2C_BUS = "I2C1";
 
-    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
     private final PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
     //Stringhe che mi rappresentano i led red, blue e green
@@ -96,24 +94,24 @@ public class MainActivity extends AppCompatActivity {
     private void executei2cScan(){
         String hexAddress;
         String name;
-        for (int address = 0; address < 127; address++) {
+        for (int address = 0; address <= 127; address++) {
             //try-with-resources: auto-close the devices
             try (final I2cDevice device = mPeripheralManager.openI2cDevice(DEFAULT_I2C_BUS, address)) {
                 try {
                     hexAddress = Integer.toHexString(address);
                     device.readRegByte(0x0);
                     name = RainbowHatDictManager.getDictionaryI2C().get(hexAddress);
-                    if (name != null)//si può togliere l'if
+                    if (name != null)
                         Log.i("i2cScanner", "Trying: "+hexAddress+" - SUCCESS -> device name = "+name);
                 } catch (final IOException e) {
-                    //Log.i("i2cScanner", "Trying: "+address+" - FAIL");
+                    Log.i("i2cScanner", "Trying: "+address+" - FAIL");
                 }
 
             } catch (final IOException e) {
                 //in case address not exists, openI2cDevice() generates an exception
+                Log.e(TAG, "address "+address +" doesn't exist!");
             }
         }
-
     }
 
     /**
@@ -153,47 +151,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        // Callable per scansione device I2C
-        final Callable<Void> i2cScanner = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                //perform scan
-                executei2cScan();
-                //dummy return value
-                return null;
-            }
-        };
+        // scansione device I2C
+        executei2cScan();
 
-        //esecuzione scansione I2C di RainbowHat
-        mExecutorService.submit(i2cScanner);
+        // scansione device GPIO
+        executeGPIOScan();
 
-        // Callable per scansione device GPIO
-        final Callable<Void> gpioScanner = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                //perform scan
-                executeGPIOScan();
-                //dummy return value
-                return null;
-            }
-        };
-
-        //esecuzione scansione GPIO di RainbowHat
-        mExecutorService.submit(gpioScanner);
-
-        // Callable per scansione device PWM
-        final Callable<Void> pwmScanner = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                //perform scan
-                executePWMScan();
-                //dummy return value
-                return null;
-            }
-        };
-
-        //esecuzione scansione PWM di RainbowHat
-        mExecutorService.submit(pwmScanner);
+        // scansione device PWM
+        executePWMScan();
 
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -223,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
         mainActivityViewModel.setLedLight(G,false);
-        
+
         //chiudo la connessione con lo Speaker di allarme
         mainActivityViewModel.closeSpeaker();
 
