@@ -66,21 +66,13 @@ public class TemperatureLiveData extends LiveData<Float> {
 
         handler.removeCallbacks(reportTemperature);
 
-        /**
-         * Provo a non chiudere la risorsa tempSensor.
-         * Essendo un sensore i2c, per aprire una nuova connessione con il dispositivo,
-         * la connessione attuale deve essere chiusa.
-         */
-        /*
         try {
             tempSensor.close();
         }
         catch (IOException e) {
             Log.d(TAG, "onInactive: " + e);
         }
-        */
-        Log.e(TAG, "Sono nell'onInactive() ma non chiudo la risorsa tempSensor");
-
+       
         super.onInactive();
         Log.d(TAG, "onInactive");
     }
