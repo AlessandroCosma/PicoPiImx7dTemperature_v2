@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PicoPiImx7dTemperature.iml" filepath="$PROJECT_DIR$/PicoPiImx7dTemperature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PicoPiImx7dTemperature_v2.iml" filepath="$PROJECT_DIR$/PicoPiImx7dTemperature_v2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
