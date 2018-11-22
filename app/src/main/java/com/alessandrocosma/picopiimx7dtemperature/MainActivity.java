@@ -28,7 +28,7 @@ import java.io.IOException;
  * and displays it in the segment display.
  * If temperature >= MAX_TEMPERATURE the red led is turned on and the device plays an alarm.
  * If NORMAL_TEMPERATURE <= temperature < MAX_TEMPERATURE the green led is turned on.
- * Otherwise (temperature < 34) blue led is turned on.
+ * Otherwise (temperature < MAX_TEMPERATURE) blue led is turned on.
  * N.B. Temperature readings are affected by heat radiated from your Pi’s CPU and the onboard LEDs;
  */
 public class MainActivity extends AppCompatActivity {
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.setLedLight(R,false);
         mainActivityViewModel.setLedLight(B,false);
         mainActivityViewModel.setLedLight(G,false);
-
+        
         //chiudo la connessione con lo Speaker di allarme
         mainActivityViewModel.closeSpeaker();
 
