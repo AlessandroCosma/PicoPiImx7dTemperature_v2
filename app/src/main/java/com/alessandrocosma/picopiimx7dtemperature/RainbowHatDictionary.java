@@ -3,7 +3,7 @@ package com.alessandrocosma.picopiimx7dtemperature;
 import java.util.HashMap;
 
 /**
- * Classe che mi rappresenta un dizionario implementato con HashMap<String, String>
+ * Classe che rappresenta un dizionario implementato con HashMap<String, String>
  * @author Alessandro Cosma
  */
 public class RainbowHatDictionary {

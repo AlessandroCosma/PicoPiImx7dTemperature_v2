@@ -12,8 +12,8 @@ public final class RainbowHatDictManager {
      */
     private static RainbowHatDictionary dictionaryI2C = new RainbowHatDictionary(2){
         {
-            put(Integer.toHexString(0x77), "BPM280");
-            put(Integer.toHexString(0x70), "HT16K33");
+            put(Integer.toHexString(0x77), "TEMP_SENSOR");
+            put(Integer.toHexString(0x70), "SEGMENT_DISPALY");
         }
     };
 
