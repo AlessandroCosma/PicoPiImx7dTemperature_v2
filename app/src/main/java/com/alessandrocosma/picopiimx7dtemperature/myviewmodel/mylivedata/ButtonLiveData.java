@@ -9,11 +9,11 @@ import android.util.Log;
 import java.io.IOException;
 
 
-public class ButtonLiveData extends LiveData<Button>{
+public class ButtonLiveData extends LiveData<Boolean>{
 
-     private static final String TAG = ButtonLiveData.class.getSimpleName();
+    private static final String TAG = ButtonLiveData.class.getSimpleName();
 
-     private Button butttonA;
+     private Button buttonC;
 
 
      @Override
@@ -23,17 +23,17 @@ public class ButtonLiveData extends LiveData<Button>{
           Log.d(TAG, "onActive");
 
           try {
-               butttonA = RainbowHat.openButtonA();
-               butttonA.setOnButtonEventListener(new Button.OnButtonEventListener() {
+               buttonC = RainbowHat.openButtonC();
+               buttonC.setOnButtonEventListener(new Button.OnButtonEventListener() {
                     @Override
                     public void onButtonEvent(Button button, boolean pressed) {
-                         setValue(butttonA);
-                         Log.d(TAG, "button A pressed");
+                        Log.d(TAG, "button C pressed");
+                        setValue(true);
                     }
                });
           }
           catch (IOException e){
-               Log.e(TAG, "Unable to open Button A");
+               Log.e(TAG, "Unable to open button C");
           }
 
      }
@@ -42,14 +42,14 @@ public class ButtonLiveData extends LiveData<Button>{
      protected void onInactive() {
 
         try {
-            buttonA.close();
+            buttonC.close();
 
         }
         catch (IOException e){
             Log.e(TAG, "OnInactive: "+e);
         }
 
-        setValue(null);
+        //setValue(null);
         
         super.onInactive();
         Log.d(TAG, "onInactive");

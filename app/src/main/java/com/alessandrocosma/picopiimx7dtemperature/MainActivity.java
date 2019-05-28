@@ -51,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewModel mainActivityViewModel;
 
 
-    private final Observer<Button> exitButtonLiveDataObserver = new Observer<Button>(){
+    private final Observer<Boolean> exitButtonLiveDataObserver = new Observer<Boolean>(){
         @Override
-        public void onChanged(@Nullable Button button){
+        public void onChanged(@Nullable Boolean pressed){
 
-            if (button != null){
+            if (pressed){
+                Log.d(TAG, "onChanged() in exitButtonLiveDataObserver: value = "+pressed);
                 MainActivity.this.finish();
             }
         }
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onChanged(@Nullable Float temperature) {
 
+            Log.d(TAG, "onChanged() in temperatureLiveDataObserver: temperature = "+temperature);
             mainActivityViewModel.display(temperature);
 
             if(temperature < NORMAL_TEMPERATURE){
@@ -152,24 +154,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
         // scansione device I2C
-        executei2cScan();
+        //executei2cScan();
 
         // scansione device GPIO
-        executeGPIOScan();
+        //executeGPIOScan();
 
         // scansione device PWM
-        executePWMScan();
+        //executePWMScan();
 
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
-        //spengo i led se accesi
-        mainActivityViewModel.setLedLight(R,false);
-        mainActivityViewModel.setLedLight(B,false);
-        mainActivityViewModel.setLedLight(G,false);
-
-        //apro la connessione con lo Speaker di allarme
-        mainActivityViewModel.openSpeaker();
 
         //inizio ad osservare il ButtonLiveData
         mainActivityViewModel.getButtonLiveData().observe(MainActivity.this, exitButtonLiveDataObserver);
@@ -183,18 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
-        //spengo i led se accesi
-        mainActivityViewModel.setLedLight(R,false);
-        mainActivityViewModel.setLedLight(B,false);
-        mainActivityViewModel.setLedLight(G,false);
-
-        //chiudo la connessione con lo Speaker di allarme
-        mainActivityViewModel.closeSpeaker();
-
-        //azzero le scritte sul display
-        mainActivityViewModel.cleanDisplay();
-
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }

@@ -3,14 +3,12 @@ package com.alessandrocosma.picopiimx7dtemperature.myviewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.util.Log;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.alessandrocosma.picopiimx7dtemperature.myviewmodel.mylivedata.ButtonLiveData;
 import com.alessandrocosma.picopiimx7dtemperature.myviewmodel.mylivedata.TemperatureLiveData;
-import com.google.android.things.contrib.driver.button.Button;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.ht16k33.Ht16k33;
@@ -24,30 +22,121 @@ public class MainActivityViewModel extends ViewModel {
 
     private static final String TAG = MainActivityViewModel.class.getSimpleName();
 
-    private ButtonLiveData mButtonLiveData;
-    private TemperatureLiveData mTemperatureLiveData;
+    private final ButtonLiveData mButtonLiveData;
+    private final TemperatureLiveData mTemperatureLiveData;
     private AlphanumericDisplay alphanumericDisplay;
     private Speaker mSpeaker;
 
-    public LiveData<Button> getButtonLiveData() {
-        if (mButtonLiveData == null)
-            mButtonLiveData = new ButtonLiveData();
+    private Gpio ledR;
+    private Gpio ledG;
+    private Gpio ledB;
 
+
+    public MainActivityViewModel(){
+
+        Log.d(TAG, "MainActivityViewModel instance created");
+
+        // Create LiveData
+        this.mButtonLiveData = new ButtonLiveData();
+        this.mTemperatureLiveData = new TemperatureLiveData();
+
+        // Open a connection to the leds
+        openLeds();
+        // Turn off leds light when init the ViewModel
+        setLedLight('R',false);
+        setLedLight('G',false);
+        setLedLight('B',false);
+
+        // Open a connection to the display
+        openDisplay();
+
+        // Open a connection to the speaker
+        openSpeaker();
+    }
+
+
+    public LiveData<Boolean> getButtonLiveData() {
         return mButtonLiveData;
     }
 
     public LiveData<Float> getTemperatureLiveData(){
-        if(mTemperatureLiveData == null)
-            mTemperatureLiveData = new TemperatureLiveData();
-
         return mTemperatureLiveData;
     }
 
+    private void openLeds(){
+        try{
+            ledR = RainbowHat.openLedRed();
+            ledB = RainbowHat.openLedBlue();
+            ledG = RainbowHat.openLedGreen();
+            Log.d(TAG, "Open LEDs connection");
+        }
+        catch (IOException e) {
+            Log.e(TAG, "Unable to open leds connection");
+        }
+    }
 
-    public void openSpeaker(){
+
+    public void setLedLight(char led, boolean value){
+
+        switch (led){
+            case 'R':
+                try {
+                    ledR.setValue(value);
+                    break;
+                }
+                catch (IOException e){
+                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
+                }
+
+            case 'B':
+                try {
+                    ledB.setValue(value);
+                    break;
+                }
+                catch (IOException e){
+                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
+                }
+
+            case 'G':
+                try {
+                    ledG.setValue(value);
+                    break;
+                }
+                catch (IOException e){
+                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
+                }
+
+            default:
+                Log.e(TAG, "Invalid led identifier. Allowed values: R,G,B");
+
+        }
+    }
+
+    private void closeLeds(){
+
+        setLedLight('R',false);
+        setLedLight('G',false);
+        setLedLight('B',false);
+
+        try {
+            ledR.close();
+            ledG.close();
+            ledB.close();
+            Log.d(TAG, "Close LEDs connection");
+
+        }
+        catch (IOException e) {
+            Log.e(TAG, "Unable to close leds connection");
+        }
+    }
+
+
+    private void openSpeaker(){
         if(mSpeaker == null){
             try {
                 mSpeaker = RainbowHat.openPiezo();
+                Log.d(TAG, "Open speaker connection");
+
             }
             catch (IOException e){
                 Log.e(TAG, "Unable to open the Speaker");
@@ -56,12 +145,14 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
-    public void closeSpeaker(){
+    private void closeSpeaker(){
         if(mSpeaker == null)
             return;
 
         try {
             mSpeaker.close();
+            Log.d(TAG, "Close speaker connection");
+
         }
         catch (IOException e){
             Log.e(TAG, "Unable to close the Speaker");
@@ -89,69 +180,20 @@ public class MainActivityViewModel extends ViewModel {
                 mSpeaker.play(2000);
                 Thread.sleep(1500);
                 mSpeaker.stop();
-            } catch (IOException | InterruptedException e) {
-                Log.e(TAG,"Unable to play buzzer sound");
+            } catch (IOException | InterruptedException | IllegalStateException e) {
+                Log.e(TAG,"Unable to play buzzer sound: "+e.toString());
             }
         }
     };
 
-
-    public void setLedLight(char led, boolean value){
-
-        Gpio ledR;
-        Gpio ledG;
-        Gpio ledB;
-
-        switch (led){
-            case 'R':
-                try {
-                    ledR = RainbowHat.openLedRed();
-                    ledR.setValue(value);
-                    ledR.close();
-                    break;
-                }
-                catch (IOException e){
-                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
-                }
-
-
-            case 'B':
-                try {
-                    ledB = RainbowHat.openLedBlue();
-                    ledB.setValue(value);
-                    ledB.close();
-                    break;
-                }
-                catch (IOException e){
-                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
-                }
-
-
-            case 'G':
-                try {
-                    ledG = RainbowHat.openLedGreen();
-                    ledG.setValue(value);
-                    ledG.close();
-                    break;
-                }
-                catch (IOException e){
-                    Log.e(TAG, "Unable to manage the led"+String.valueOf(led));
-                }
-
-
-                default:
-                    Log.e(TAG, "identificatore led non corrispondente. Valori ammessi: R,G,B");
-
-        }
-    }
-
-    public void display(Float value) {
+    private void openDisplay(){
         if (alphanumericDisplay == null) {
             try {
                 alphanumericDisplay = RainbowHat.openDisplay();
                 alphanumericDisplay.setBrightness(Ht16k33.HT16K33_BRIGHTNESS_MAX);
                 alphanumericDisplay.clear();
                 alphanumericDisplay.setEnabled(true);
+                Log.d(TAG, "Open display connection");
             }
             catch (IOException e) {
                 Log.d(TAG, "display: " + e);
@@ -159,6 +201,12 @@ public class MainActivityViewModel extends ViewModel {
                 return;
             }
         }
+        else{
+            Log.d(TAG, "The display is already opened");
+        }
+    }
+
+    public void display(Float value) {
 
         try {
             alphanumericDisplay.display(value);
@@ -168,23 +216,27 @@ public class MainActivityViewModel extends ViewModel {
         }
     }
 
-    public void cleanDisplay(){
-        if (alphanumericDisplay == null) {
+    private void closeDisplay(){
+        if (alphanumericDisplay != null) {
             try {
-                alphanumericDisplay = RainbowHat.openDisplay();
+                alphanumericDisplay.clear();
+                alphanumericDisplay.setEnabled(true);
+                alphanumericDisplay.close();
+                Log.d(TAG, "Close display connection");
             } catch (IOException e) {
-                alphanumericDisplay = null;
-                return;
             }
         }
 
-        try {
-            alphanumericDisplay.clear();
-            alphanumericDisplay.setEnabled(true);
-            alphanumericDisplay.close();
-        }
-        catch (IOException e) {}
+    }
 
+    @Override
+    protected void onCleared() {
+        //spengo i led se accesi e chiudo la connessione
+        closeLeds();
+        //chiudo la connessione con lo Speaker di allarme
+        closeSpeaker();
+        //azzero le scritte sul display
+        closeDisplay();
     }
 
 }

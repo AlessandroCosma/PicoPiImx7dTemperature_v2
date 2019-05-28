@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.math.BigDecimal;
 
-public class TemperatureLiveData extends LiveData<Float> {
+public class TemperatureLiveData extends LiveData<Float>{
 
     private static final String TAG = TemperatureLiveData.class.getSimpleName();
     private Bmx280 tempSensor;
@@ -70,9 +70,9 @@ public class TemperatureLiveData extends LiveData<Float> {
             tempSensor.close();
         }
         catch (IOException e) {
-            Log.d(TAG, "onInactive: " + e);
+            Log.d(TAG, " " + e);
         }
-       
+
         super.onInactive();
         Log.d(TAG, "onInactive");
     }
