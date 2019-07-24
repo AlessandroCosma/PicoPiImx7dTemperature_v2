@@ -23,11 +23,13 @@ public class TemperatureLiveData extends LiveData<Float>{
         @Override
         public void run() {
             try {
+                // Read temperature value from Bmx280 sensor
                 temperature = tempSensor.readTemperature();
+                // Convert and scale the value
                 BigDecimal tempBG = new BigDecimal(temperature);
                 tempBG = tempBG.setScale(2, BigDecimal.ROUND_HALF_UP);
                 temperature = (tempBG.floatValue());
-                //notifico il valore all'observer
+                // Notify the observer
                 setValue(temperature);
             }
             catch (IOException | IllegalStateException e){

@@ -26,7 +26,7 @@ public class ButtonLiveData extends LiveData<Boolean>{
                buttonC = RainbowHat.openButtonC();
                buttonC.setOnButtonEventListener(new Button.OnButtonEventListener() {
                     @Override
-                    public void onButtonEvent(Button button, boolean pressed) {
+                    public void onButtonEvent (Button button, boolean pressed) {
                         Log.d(TAG, "button C pressed");
                         setValue(true);
                     }
@@ -49,10 +49,7 @@ public class ButtonLiveData extends LiveData<Boolean>{
             Log.e(TAG, "OnInactive: "+e);
         }
 
-        //setValue(null);
-        
         super.onInactive();
         Log.d(TAG, "onInactive");
      }
-
 }

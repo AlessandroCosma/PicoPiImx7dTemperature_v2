@@ -36,20 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
     //costanti che mi definiscono le soglie di temperatura per l'accensione dei vari led colorati
     private static final float MAX_TEMPERATURE = 28.0f;
-    private static final float NORMAL_TEMPERATURE = 24.0f;
+    private static final float NORMAL_TEMPERATURE = 22.0f;
 
     //costante che mi definisce il bus I2C del RainbowHat
     private static final String DEFAULT_I2C_BUS = "I2C1";
 
     private final PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
-    //Stringhe che mi rappresentano i led red, blue e green
-    private final char R = 'R';
-    private final char B = 'B';
-    private final char G = 'G';
 
     private MainActivityViewModel mainActivityViewModel;
-
 
     private final Observer<Boolean> exitButtonLiveDataObserver = new Observer<Boolean>(){
         @Override
@@ -70,20 +65,20 @@ public class MainActivity extends AppCompatActivity {
             mainActivityViewModel.display(temperature);
 
             if(temperature < NORMAL_TEMPERATURE){
-                mainActivityViewModel.setLedLight(R,false);
-                mainActivityViewModel.setLedLight(G,false);
-                mainActivityViewModel.setLedLight(B,true);
+                mainActivityViewModel.setLedLight('R',false);
+                mainActivityViewModel.setLedLight('G',false);
+                mainActivityViewModel.setLedLight('B',true);
             }
 
             else if(temperature >= NORMAL_TEMPERATURE && temperature < MAX_TEMPERATURE){
-                mainActivityViewModel.setLedLight(R,false);
-                mainActivityViewModel.setLedLight(G,true);
-                mainActivityViewModel.setLedLight(B,false);
+                mainActivityViewModel.setLedLight('R',false);
+                mainActivityViewModel.setLedLight('G',true);
+                mainActivityViewModel.setLedLight('B',false);
             }
             else {
-                mainActivityViewModel.setLedLight(R,true);
-                mainActivityViewModel.setLedLight(G,false);
-                mainActivityViewModel.setLedLight(B,false);
+                mainActivityViewModel.setLedLight('R',true);
+                mainActivityViewModel.setLedLight('G',false);
+                mainActivityViewModel.setLedLight('B',false);
 
                 mainActivityViewModel.playSound();
             }
@@ -165,10 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
-        //inizio ad osservare il ButtonLiveData
+        // Start observing ButtonLiveData
         mainActivityViewModel.getButtonLiveData().observe(MainActivity.this, exitButtonLiveDataObserver);
 
-        //inizio ad osservare il TemperatureLiveData
+        // Start observingTemperatureLiveData
         mainActivityViewModel.getTemperatureLiveData().observe(MainActivity.this, temperatureLiveDataObserver);
 
 

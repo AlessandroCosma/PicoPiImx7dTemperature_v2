@@ -24,12 +24,12 @@ public class MainActivityViewModel extends ViewModel {
 
     private final ButtonLiveData mButtonLiveData;
     private final TemperatureLiveData mTemperatureLiveData;
-    private AlphanumericDisplay alphanumericDisplay;
-    private Speaker mSpeaker;
+    private final AlphanumericDisplay alphanumericDisplay;
+    private final Speaker mSpeaker;
 
-    private Gpio ledR;
-    private Gpio ledG;
-    private Gpio ledB;
+    private final Gpio ledR;
+    private final Gpio ledG;
+    private final Gpio ledB;
 
 
     public MainActivityViewModel(){
@@ -165,9 +165,8 @@ public class MainActivityViewModel extends ViewModel {
             this.openSpeaker();
         }
 
-        /** An Handler for buzzer sound.
-         *  It is an asynchronous thread but still on the main thread
-         */
+        // An Handler for buzzer sound.
+        // It is an asynchronous thread but still on the main thread
         Handler buzzerSoundHandler = new Handler(Looper.getMainLooper());
         buzzerSoundHandler.post(playSound);
     }
@@ -231,12 +230,11 @@ public class MainActivityViewModel extends ViewModel {
 
     @Override
     protected void onCleared() {
-        //spengo i led se accesi e chiudo la connessione
+        // Close LEDs light and the connections
         closeLeds();
-        //chiudo la connessione con lo Speaker di allarme
+        // Close speaker connection
         closeSpeaker();
-        //azzero le scritte sul display
+        // Clean the display and close the connection
         closeDisplay();
     }
-
 }
